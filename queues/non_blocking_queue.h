@@ -16,7 +16,7 @@ struct pointer_t {
         // Get the count from the 16 most significant bits of ptr
     }
     void setPtr(P* address, uint count){
-        ptr = reinterpret_cast<P*>(reinterpret_cast<uintptr_t>(address) & (static_cast<uintptr_t>(count) << 48));
+        ptr = reinterpret_cast<P*>(reinterpret_cast<uintptr_t>(address) | (static_cast<uintptr_t>(count) << 48));
     }
 };
 
@@ -45,6 +45,7 @@ struct NonBlockingQueue {
     }
 
     void enqueue(T value) {
+        //std::cout << "start enqueue" << std::endl;
         Node<T>* node = (Node<T>* )my_allocator.newNode();
         node->value = value;
         node->next.ptr = NULL;
@@ -71,9 +72,11 @@ struct NonBlockingQueue {
         SFENCE;
         newVal.setPtr(node, tail.count()+1);
         CAS(&q_tail, tail, newVal);
+        std::cout << "end enqueue" << std::endl;
     }
 
     bool dequeue(T* p_value) {
+        //std::cout << "start dequeue" << std::endl;
         pointer_t<Node<T>> next;
         pointer_t<Node<T>> head;
         pointer_t<Node<T>> tail;
@@ -101,9 +104,11 @@ struct NonBlockingQueue {
             }
         }
         my_allocator.freeNode(head.address());
+        //std::cout << "end dequeue" << std::endl;
         return true;
     }
     void cleanup() {
+        //std::cout << "here" << std::endl;
         my_allocator.cleanup();
     }
 };

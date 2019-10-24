@@ -45,14 +45,18 @@ struct NonBlockingQueue {
     }
 
     void enqueue(T value) {
+
+        pointer_t<Node<T>> tail;
+        pointer_t<Node<T>> next;
+        pointer_t<Node<T>> newVal;
+
         //std::cout << "start enqueue" << std::endl;
+
         Node<T>* node = (Node<T>* )my_allocator.newNode();
         node->value = value;
         node->next.ptr = NULL;
         SFENCE;
-        pointer_t<Node<T>> tail;
-        pointer_t<Node<T>> next;
-        pointer_t<Node<T>> newVal;
+
         while(true) {
             tail = q_tail;
             LFENCE;
@@ -60,19 +64,26 @@ struct NonBlockingQueue {
             LFENCE;
             if (tail.ptr == q_tail.ptr){
                 if (next.address() == NULL) {
+                    //std::cout << "ENQ 1" << std::endl;
                     newVal.setPtr(node, next.count()+1);
                     if(CAS(&tail.address()->next, next, newVal))
                         break;
                 }
                 else
+                {
+                    //std::cout << "ENQ 2" << std::endl;
                     newVal.setPtr(next.address(), tail.count()+1);
                     CAS(&q_tail, tail, newVal);    // ELABEL
+                    //std::cout << "end ENQ 2" << std::endl;
+                }
             }
         }
+        //std::cout << "EnQ 3" << std::endl;
         SFENCE;
         newVal.setPtr(node, tail.count()+1);
+        //std::cout << &q_tail << std::endl;
         CAS(&q_tail, tail, newVal);
-        std::cout << "end enqueue" << std::endl;
+        //std::cout << "end enqueue" << std::endl;
     }
 
     bool dequeue(T* p_value) {

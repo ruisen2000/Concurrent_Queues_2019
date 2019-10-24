@@ -61,9 +61,10 @@ struct ProducerWithInputs
         // std::cout << "Start producing..\n";
         for (long i = start_; i < end_; i++)
         {
+        	//std::cout<< i << std::endl;
             my_queue.enqueue(inputs_[i]);
         }
-
+        std::cout << "producer done " << std::endl;
         *total_time_ = t.stop();
         producers_finished_->fetch_add(1);
     }
@@ -130,6 +131,7 @@ struct ConsumerWithOutput
                     break;
             }
         }
+        std::cout << "consumer done " << std::endl;
         *processed_elements_ = count;
         *total_time_ = t.stop();
     }
@@ -242,10 +244,12 @@ int main(int argc, char *argv[])
     }
 
     // Wait for producers and consumers ----------------------------
+    std::cout << "joining producers " << std::endl;
     for (int i = 0; i < n_producers; ++i)
     {
         producers[i].join();
     }
+    std::cout << "joining consumers " << std::endl;
     for (int i = 0; i < n_consumers; ++i)
     {
         consumers[i].join();

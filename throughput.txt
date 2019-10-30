@@ -1,0 +1,66 @@
+5356 - submit1 with 8
+5362 - submit2 with 8
+5366 - submit3 with 8 but longer
+
+Onelock:
+Total throughput = 3414349
+Total throughput = 2888732
+Total throughput = 2265208
+Total throughput = 1813698
+
+Total throughput = 1517030
+Total failed = 5447646
+
+Total throughput = 1588902
+Total failed = 5149245
+
+Total throughput = 1392977
+Total failed = 8590102
+
+Total throughput = 1255341
+Total failed = 7373050
+
+twolock:
+Total throughput = 2469686
+Total failed = 24027921
+Total throughput = 1864317
+Total failed = 25324666
+Total throughput = 3363856
+Total failed = 14945470
+Total throughput = 2938988
+Total failed = 12574272
+Total throughput = 1264006
+Total failed = 21845072
+Total throughput = 1547502
+Total failed = 9673870
+Total throughput = 1531671
+Total failed = 11636309
+Total throughput = 1526197
+Total failed = 11905560
+
+
+non_blocking:
+Total throughput = 5432255
+Total failed = 33038462
+
+Total throughput = 3957708
+Total failed = 28106712
+
+Total throughput = 3962006
+Total failed = 40107488
+
+Total throughput = 3855897
+Total failed = 37532380
+
+Total throughput = 1565494
+Total failed = 48107618
+
+Total throughput = 1433376
+Total failed = 43481335
+
+Total throughput = 1509729
+Total failed = 42477835
+
+Total throughput = 1387595
+Total failed = 34672505
+

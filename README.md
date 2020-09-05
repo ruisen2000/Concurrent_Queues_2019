@@ -1,3 +1,3 @@
-Concurrent Queues in C++
-Date: 2019
+Concurrent Queues in C++ using locks.  
+Date: 2019  
 Course: Distributed Systems
